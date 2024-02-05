@@ -1,39 +1,75 @@
-/// @description Insert description here
-// You can write your code in this editor
+//TODO IMPROVE???
 
-
-left_button = keyboard_check(vk_left);
-right_button = keyboard_check(vk_right);
-up_button = keyboard_check(vk_up);
-down_button = keyboard_check(vk_down);
+left_button = keyboard_check(vk_left) or keyboard_check(ord("A"));
+right_button = keyboard_check(vk_right)or keyboard_check(ord("D"));
+up_button = keyboard_check(vk_up) or keyboard_check(ord("W"));
+down_button = keyboard_check(vk_down) or keyboard_check(ord("S"));
 jump_button = keyboard_check(vk_space);
 
+var _horizontal_movement = right_button - left_button;
+var _vertical_movement = jump_button; //TODO ladders
 
-horizontal_movement = right_button - left_button;
-vertical_movement = jump_button;
+horizontal_speed = _horizontal_movement * walk_speed;
+vertical_speed += gravity_strength;
 
-x += horizontal_movement * walk_speed;
-//y += vertical_movement * jump_speed;
+var _on_ground = place_meeting(x, y+1, obj_wall);
 
-
-
-
-
-
-
-
-	if(place_meeting(x, y+1, obj_wall))
+//TODO ladder is kinda clunky but fun as a mechanic, keep it??
+//ladder 
+if(up_button)
+{
+	var _on_ladder = place_meeting(x, y, obj_ladder);
+	if(_on_ladder)
 	{
-		gravity = 0;
-		vspeed = 0;
+		vertical_speed = -climb_speed;
+		jump_timer = 10;
 	}
-	else
-	{
-		gravity = gravity_strength;
+}
+
+
+
+//jumping
+jump_timer--;
+if(_on_ground)
+{
+	jump_timer = 10;
+	jump_counter = max_jumps;
+}
+if((jump_timer > 0) && jump_button && jump_counter > 0)
+{
+	vertical_speed -= (_vertical_movement * jump_speed);
+	jump_counter--;
+}
+
+//Horizontal collision
+if(place_meeting(x + horizontal_speed, y, obj_wall))
+{
+	while(!place_meeting(x + sign(horizontal_speed), y, obj_wall)){
+		x += sign(horizontal_speed);
 	}
+	horizontal_speed = 0;
 	
-	
-	if(jump_button)
-	{
-		vspeed = -20;
+}
+x += horizontal_speed;
+
+//Vertical collision
+if(place_meeting(x, y + vertical_speed, obj_wall))
+{
+	while(!place_meeting(x, y + sign(vertical_speed), obj_wall)){
+		y += sign(vertical_speed);
 	}
+	vertical_speed = 0;
+	
+}
+y += vertical_speed;
+
+
+
+
+
+
+
+
+
+
+	

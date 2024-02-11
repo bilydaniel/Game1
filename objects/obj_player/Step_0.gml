@@ -1,4 +1,6 @@
-//TODO IMPROVE???
+//TODO IMPROVE MOVEMENT, INPUT, COLLISIONS???
+
+//TODO add ledge grab
 
 left_button = keyboard_check(vk_left) or keyboard_check(ord("A"));
 right_button = keyboard_check(vk_right)or keyboard_check(ord("D"));
@@ -12,7 +14,7 @@ var _vertical_movement = jump_button; //TODO ladders
 horizontal_speed = _horizontal_movement * walk_speed;
 vertical_speed += gravity_strength;
 
-var _on_ground = place_meeting(x, y+1, obj_wall);
+var _on_ground = place_meeting(x, y+1, tile_map); //todo use instead of checking again
 
 //TODO ladder is kinda clunky but fun as a mechanic, keep it??
 //ladder 
@@ -42,9 +44,9 @@ if((jump_timer > 0) && jump_button && jump_counter > 0)
 }
 
 //Horizontal collision
-if(place_meeting(x + horizontal_speed, y, obj_wall))
+if(place_meeting(x + horizontal_speed, y, tile_map))
 {
-	while(!place_meeting(x + sign(horizontal_speed), y, obj_wall)){
+	while(!place_meeting(x + sign(horizontal_speed), y, tile_map)){
 		x += sign(horizontal_speed);
 	}
 	horizontal_speed = 0;
@@ -53,9 +55,9 @@ if(place_meeting(x + horizontal_speed, y, obj_wall))
 x += horizontal_speed;
 
 //Vertical collision
-if(place_meeting(x, y + vertical_speed, obj_wall))
+if(place_meeting(x, y + vertical_speed, tile_map))
 {
-	while(!place_meeting(x, y + sign(vertical_speed), obj_wall)){
+	while(!place_meeting(x, y + sign(vertical_speed), tile_map)){
 		y += sign(vertical_speed);
 	}
 	vertical_speed = 0;

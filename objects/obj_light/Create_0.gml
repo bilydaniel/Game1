@@ -4,7 +4,7 @@
 light_x = x;
 light_y = y;
 
-radius = 64; //radius in pixels 
+radius = 128; //radius in pixels 
 tile_size = 16;
 tilemap = -1;
 
@@ -14,6 +14,8 @@ vertex_format_add_color();
 vertex_format = vertex_format_end();
 vertex_buffer = vertex_create_buffer();
 
+surface = -1;
 
+light_pos_radius = shader_get_uniform(sh_shader0,"u_fLightPositionRadius");
 
 

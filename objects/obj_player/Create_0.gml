@@ -25,5 +25,5 @@ max_jumps = 1; //TODO double jump later, need to add a delay between jumps, does
 gravity_strength = 0.3;
 climb_speed = 2;
 
-
+tile_map = layer_tilemap_get_id("walls_tiles");
 

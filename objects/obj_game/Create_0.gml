@@ -14,5 +14,5 @@ global.base_resolution_x = base_resolution_x;
 global.base_resolution_y = base_resolution_y;
 global.target_resolution_x = target_resolution_x;
 global.target_resolution_y = target_resolution_y;
-global.is_day = false;
+global.is_day = true;
 
